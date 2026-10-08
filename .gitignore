@@ -1,0 +1,28 @@
+# Build artifacts
+target/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Demo artifacts (regenerable)
+demo/contracts/out/
+demo/contracts/cache/
+demo/anvil.ready
+docs/assets/preview.html
+docs/assets/frame_preview.html
+docs/assets/frame_check.png
+docs/assets/_frame_template.html
+
+# Environment files
+.env
+.env.*

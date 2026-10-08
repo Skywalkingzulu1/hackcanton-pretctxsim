@@ -1,0 +1,16 @@
+[package]
+name = "pretxsim_poc"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
+jsonrpsee = { version = "0.24", features = ["server", "macros"] }
+revm = { version = "19.0", features = ["std"] }
+reqwest = { version = "0.12", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+hex = "0.4"
+async-trait = "0.1"
+
+[dev-dependencies]
