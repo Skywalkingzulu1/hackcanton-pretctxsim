@@ -1,0 +1,22 @@
+﻿[
+  {
+    "from": "0x0000000000000000000000000000000000000001",
+    "to": "0x000000000000000000000000000000000000dead",
+    "value": "0x1000000000000000",
+    "gas": "0x5208",
+    "gasPrice": "0x3b9aca00",
+    "nonce": "0x0",
+    "data": "0x",
+    "description": "Malicious-like: transfer to untrusted target (demo gate)"
+  },
+  {
+    "from": "0x0000000000000000000000000000000000000001",
+    "to": "0x000000000000000000000000000000000000babe",
+    "value": "0x1000",
+    "gas": "0x5208",
+    "gasPrice": "0x3b9aca00",
+    "nonce": "0x0",
+    "data": "0x",
+    "description": "Clean ETH transfer"
+  }
+]
