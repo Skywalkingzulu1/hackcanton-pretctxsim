@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PreTxSim — HackCanton Season 3 Pitch Deck</title>
+<style>
+  :root {
+    --bg: #070b16;
+    --panel: #0e1526;
+    --card: #131d33;
+    --fg: #eef3fc;
+    --muted: #93a1bd;
+    --accent: #5eead4;
+    --accent2: #7aa5ff;
+    --warn: #fca5a5;
+    --ok: #86efac;
+    --border: #233050;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: radial-gradient(1200px 700px at 70% -10%, #16244a 0%, var(--bg) 55%) fixed, var(--bg);
+    color: var(--fg);
+    font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+    overflow: hidden;
+    line-height: 1.55;
+  }
+  #deck { height: 100vh; display: flex; align-items: center; justify-content: center; }
+  .slide {
+    display: none;
+    width: min(1020px, 92vw);
+    max-height: 88vh;
+    overflow: auto;
+    background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,0)), var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: clamp(28px, 5vw, 64px);
+    box-shadow: 0 30px 80px rgba(0,0,0,.5);
+  }
+  .slide.active { display: block; animation: rise .35s ease; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .kicker {
+    display: inline-block; font-size: 12.5px; font-weight: 800; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--accent);
+    border: 1px solid rgba(94,234,212,.35); background: rgba(94,234,212,.08);
+    padding: 5px 14px; border-radius: 999px; margin-bottom: 20px;
+  }
+  h1 { font-size: clamp(34px, 5.4vw, 58px); line-height: 1.08; margin-bottom: 14px; }
+  h1 .grad {
+    background: linear-gradient(92deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  h2 { font-size: clamp(24px, 3.4vw, 36px); margin-bottom: 16px; }
+  h2 .n { color: var(--accent); font-weight: 800; margin-right: 10px; }
+  p.sub { color: var(--muted); font-size: clamp(15px, 2vw, 19px); max-width: 62ch; }
+  p + p { margin-top: 12px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 22px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
+  @media (max-width: 720px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px 20px;
+  }
+  .card h3 { font-size: 16px; margin-bottom: 6px; color: var(--accent); }
+  .card p, .card li { font-size: 14.5px; color: var(--muted); }
+  .card p b, .card li b { color: var(--fg); }
+  .card ul { list-style: none; }
+  .card li { padding: 3px 0 3px 20px; position: relative; }
+  .card li::before { content: "▸"; position: absolute; left: 2px; color: var(--accent); }
+  .stat { text-align: center; }
+  .stat .v { font-size: clamp(30px, 4.4vw, 46px); font-weight: 800; color: var(--accent); }
+  .stat .l { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
+  code, .mono {
+    font-family: Consolas, "SF Mono", monospace; font-size: .9em;
+    color: var(--accent); background: rgba(94,234,212,.07);
+    border: 1px solid rgba(94,234,212,.22); padding: 1px 7px; border-radius: 6px;
+    word-break: break-all;
+  }
+  pre {
+    background: #0a1122; border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 18px; margin-top: 18px; overflow: auto; font-size: 13.5px;
+  }
+  pre .g { color: var(--ok); } pre .r { color: var(--warn); }
+  pre .c { color: var(--accent); } pre .m { color: var(--muted); }
+  .flow { display: flex; align-items: stretch; gap: 0; margin-top: 24px; flex-wrap: wrap; }
+  .step {
+    flex: 1 1 130px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 12px; text-align: center; font-size: 13.5px;
+  }
+  .step b { display: block; color: var(--accent); font-size: 14.5px; margin-bottom: 4px; }
+  .arrow { align-self: center; padding: 0 8px; color: var(--accent); font-weight: 800; font-size: 20px; }
+  .cta-row { display: flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 12px 22px; border-radius: 12px; font-weight: 800;
+    text-decoration: none; font-size: 15px; border: 1px solid var(--border);
+  }
+  .btn.primary { background: var(--accent); color: #06251f; border-color: transparent; }
+  .btn.ghost { color: var(--accent); background: rgba(94,234,212,.07); }
+  /* chrome */
+  #bar { position: fixed; top: 0; left: 0; height: 4px; background: linear-gradient(90deg, var(--accent), var(--accent2)); width: 0; z-index: 10; }
+  #hud {
+    position: fixed; bottom: 18px; left: 0; right: 0; display: flex;
+    align-items: center; justify-content: center; gap: 18px; z-index: 10;
+    color: var(--muted); font-size: 13px; user-select: none;
+  }
+  #hud button {
+    background: var(--card); color: var(--fg); border: 1px solid var(--border);
+    border-radius: 10px; width: 38px; height: 38px; font-size: 18px; cursor: pointer;
+  }
+  #hud button:hover { border-color: var(--accent); }
+  #dots { display: flex; gap: 7px; }
+  #dots span { width: 9px; height: 9px; border-radius: 50%; background: #2a3852; cursor: pointer; }
+  #dots span.on { background: var(--accent); }
+  .foot { margin-top: 26px; font-size: 12.5px; color: var(--muted); }
+  .warnline { border-left: 4px solid var(--warn); padding: 10px 16px; background: rgba(252,165,165,.06); border-radius: 0 10px 10px 0; margin-top: 18px; font-size: 14.5px; }
+  .okline { border-left: 4px solid var(--ok); padding: 10px 16px; background: rgba(134,239,172,.06); border-radius: 0 10px 10px 0; margin-top: 18px; font-size: 14.5px; }
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="deck">
+
+  <!-- 1 TITLE -->
+  <section class="slide">
+    <span class="kicker">HackCanton Season 3 · Open Track · Privacy &amp; Contract Logic</span>
+    <h1>See it <span class="grad">before you sign it.</span></h1>
+    <p class="sub"><b style="color:var(--fg)">PreTxSim</b> is a local, air-gapped EVM simulation proxy. It sits between your wallet and the network, rehearses every transaction against live state, and refuses the dangerous ones — with your keys and intents never leaving the machine.</p>
+    <div class="grid3">
+      <div class="card stat"><div class="v">:8545</div><div class="l">drop-in RPC proxy — zero integration</div></div>
+      <div class="card stat"><div class="v">&lt;800MB</div><div class="l">RAM target, fully local</div></div>
+      <div class="card stat"><div class="v">0</div><div class="l">bytes of tx data sent to third parties</div></div>
+    </div>
+    <p class="foot">Skywalkingzulu1 · Rust + revm · <span class="mono">github.com/Skywalkingzulu1/hackcanton-pretctxsim</span> · Use ← → arrow keys to navigate</p>
+  </section>
+
+  <!-- 2 PROBLEM -->
+  <section class="slide">
+    <span class="kicker">The problem</span>
+    <h2><span class="n">01</span>Blind signing drains wallets — and enterprises can't use the fix</h2>
+    <div class="grid2">
+      <div class="card"><h3>Users sign what they can't read</h3><p>Wallet-drainer phishing stole <b>$494M in 2024</b> (+67% YoY, 332k addresses). One malicious <span class="mono">approve()</span> or EIP-7702 delegation empties a wallet.</p></div>
+      <div class="card"><h3>Existing simulation leaks intent</h3><p>Blockaid, Tenderly, Alchemy simulate on <b>their servers</b> — your transaction data goes to a third party. (Alchemy's sim APIs were <b>deprecated Sept 2026</b>.) Enterprises, treasuries and agents can't accept that.</p></div>
+    </div>
+    <div class="warnline">The gap: there is no <b>local, open-source, drop-in</b> simulation layer. Every option is cloud-hosted, wallet-locked, or dead.</div>
+  </section>
+
+  <!-- 3 SOLUTION -->
+  <section class="slide">
+    <span class="kicker">The solution</span>
+    <h2><span class="n">02</span>PreTxSim: a security proxy at the signing moment</h2>
+    <p class="sub">Point any wallet, bot, or AI agent at <span class="mono">http://127.0.0.1:8545</span>. PreTxSim intercepts <span class="mono">eth_sendTransaction</span>, simulates it locally with <b style="color:var(--fg)">revm</b>, briefs you, and gates broadcast behind your confirmation.</p>
+    <div class="flow">
+      <div class="step"><b>Intercept</b>eth_sendTransaction on :8545</div><div class="arrow">→</div>
+      <div class="step"><b>Simulate</b>revm vs live RPC state</div><div class="arrow">→</div>
+      <div class="step"><b>Inspect</b>RiskInspector flags patterns</div><div class="arrow">→</div>
+      <div class="step"><b>Brief</b>local Ollama PASS / WARN</div><div class="arrow">→</div>
+      <div class="step"><b>Gate</b>you accept or refuse</div>
+    </div>
+  </section>
+
+  <!-- 4 DEMO -->
+  <section class="slide">
+    <span class="kicker">Live demo · 90 seconds</span>
+    <h2><span class="n">03</span>The gate in action</h2>
+<pre><span class="m">$ curl -X POST 127.0.0.1:8545 -d '{"method":"eth_sendTransaction", ...EIP-7702 delegation...}'</span>
+<span class="c">[*] Structural Analysis Extracted:</span>
+  delegation_changes: [{ delegated_to: 0x9f…c1 }]   <span class="r">← attacker contract</span>
+<span class="r">[-] BLOCK: EIP-7702 delegation to untrusted target</span>
+<span class="m">Proceed with broadcast? [y/N]: N  →  Transaction aborted. Nothing left the machine.</span>
+
+<span class="m">$ ...clean ETH transfer...</span>
+<span class="c">[*] balance delta -0.001 · gas 21000 · slots written 0</span>
+<span class="g">[+] Ollama brief: PASS — plain value transfer, no flags</span>
+<span class="m">Proceed with broadcast? [y/N]: y  →  broadcast.</span></pre>
+    <div class="cta-row">
+      <span class="btn ghost">▶ Full runbook: demo_runbook.md</span>
+      <span class="btn ghost">▶ Video: docs/assets/demo.mp4</span>
+    </div>
+  </section>
+
+  <!-- 5 INSPECTOR -->
+  <section class="slide">
+    <span class="kicker">Under the hood</span>
+    <h2><span class="n">04</span>RiskInspector: structural, deterministic, fast</h2>
+    <div class="grid3">
+      <div class="card"><h3>Control-flow flags</h3><ul><li><b>DELEGATECALL</b> opcode counter</li><li><b>SELFDESTRUCT</b> tripwire</li><li>Storage slots written</li></ul></div>
+      <div class="card"><h3>Value-flow diffs</h3><ul><li>Balance changes + deltas</li><li>Token transfers (logs)</li><li>Allowance changes</li></ul></div>
+      <div class="card"><h3>Post-Pectra risks</h3><ul><li><b>EIP-7702</b> delegation designator parsing</li><li>Delegated-EOA detection at load</li><li>Emitted-log capture</li></ul></div>
+    </div>
+    <div class="okline">Deterministic checks do the provable work; the local LLM only advises. Separation of powers — the Vergil/ONCHOR winning pattern.</div>
+  </section>
+
+  <!-- 6 LOCAL + CI -->
+  <section class="slide">
+    <span class="kicker">Privacy architecture + DevSecOps</span>
+    <h2><span class="n">05</span>Air-gapped by design, CI-ready by flag</h2>
+    <div class="grid2">
+      <div class="card"><h3>Nothing leaves the machine</h3><ul><li>Simulation in-process via <b>revm</b> (Rust)</li><li>AI brief from local <b>Ollama</b> (<span class="mono">smollm2</span>) — offline</li><li>Only state reads hit your chosen RPC; keys never broadcast until you say so</li></ul></div>
+      <div class="card"><h3><span class="mono">--ci</span> mode for pipelines</h3><ul><li>Pipe a tx in → structured <b>JSON report</b> out</li><li>Exit <b>1</b> on BLOCK findings — fails the build</li><li>Shift-left Web3 security for contract CI/CD</li></ul></div>
+    </div>
+<pre><span class="m">$ cat tx.json | ./pretxsim_poc --ci</span>
+<span class="c">{"analysis": {...}, "execution_success": true, "advice": "PASS ..."}</span></pre>
+  </section>
+
+  <!-- 7 TRACK FIT -->
+  <section class="slide">
+    <span class="kicker">Why HackCanton · Enterprise Privacy &amp; Contract Logic</span>
+    <h2><span class="n">06</span>Privacy isn't a feature here. It's the architecture.</h2>
+    <div class="grid2">
+      <div class="card"><h3>Enterprise privacy</h3><p>Transaction intent is market-sensitive. PreTxSim never exposes it to a vendor cloud — simulation, AI briefing, and the gate all run inside your perimeter. <b>Auditable, self-hostable, open-source.</b></p></div>
+      <div class="card"><h3>Contract-logic verification</h3><p>Every call is rehearsed against live state <b>before</b> signing: condition outcomes, balance deltas, gas, side effects. The same engine validates multisig proposals, agent payments, and event-driven executions.</p></div>
+    </div>
+    <div class="okline">One command to evaluate: <span class="mono">docker compose up</span> → proxy + Ollama. No accounts, no keys, no setup friction for judges.</div>
+  </section>
+
+  <!-- 8 PROOF -->
+  <section class="slide">
+    <span class="kicker">Proof, not promises</span>
+    <h2><span class="n">07</span>Verified today, on this machine</h2>
+    <div class="grid3">
+      <div class="card stat"><div class="v">✓</div><div class="l"><span class="mono">cargo build</span> green · Rust + revm 19</div></div>
+      <div class="card stat"><div class="v">✓</div><div class="l"><span class="mono">--ci</span> tested: exit 0 clean · exit 1 on RPC failure, JSON on stderr</div></div>
+      <div class="card stat"><div class="v">✓</div><div class="l">Demo GIF + MP4 + runbook shipped in-repo</div></div>
+    </div>
+    <div class="warnline">Stated honestly: single-chain config today (<span class="mono">chain_id = 1</span> default, RPC-switchable); allowance-diff depth and latency benchmarking are next. No threat-intel network claims — locality is the moat, not data scale.</div>
+  </section>
+
+  <!-- 9 ROADMAP/ASK -->
+  <section class="slide">
+    <span class="kicker">Roadmap</span>
+    <h2><span class="n">08</span>Where this goes next</h2>
+    <div class="grid3">
+      <div class="card"><h3>Now → Oct 13</h3><ul><li>Multichain presets (Monad, BNB, Base)</li><li>Published latency benchmark vs 300ms bar</li><li>Full allowance-diff tracking</li></ul></div>
+      <div class="card"><h3>Oct → Nov</h3><ul><li><span class="mono">policy.json</span> compliance packs (RegTech)</li><li>Agent-payment rails (mandatory sim layer)</li><li>Multisig proposal simulator UI</li></ul></div>
+      <div class="card"><h3>Ask</h3><ul><li>Judge it live: <b>one docker command</b></li><li>Design partners for agent treasury pilots</li><li>Feedback on the policy-rule schema</li></ul></div>
+    </div>
+    <div class="cta-row">
+      <span class="btn primary">Repo: hackcanton-pretctxsim</span>
+      <span class="btn ghost">Demo: demo_runbook.md</span>
+    </div>
+    <p class="foot">PreTxSim — see it before you sign it. · Built for HackCanton Season 3 · Thank you.</p>
+  </section>
+
+</div>
+
+<div id="hud">
+  <button id="prev" aria-label="Previous">‹</button>
+  <div id="dots"></div>
+  <span id="count">1 / 9</span>
+  <button id="next" aria-label="Next">›</button>
+</div>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var dots = document.getElementById('dots');
+  var count = document.getElementById('count');
+  var bar = document.getElementById('bar');
+  var i = 0;
+  slides.forEach(function (_, k) {
+    var d = document.createElement('span');
+    d.addEventListener('click', function () { go(k); });
+    dots.appendChild(d);
+  });
+  var dotEls = dots.children;
+  function go(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (s, k) { s.classList.toggle('active', k === i); });
+    for (var k = 0; k < dotEls.length; k++) dotEls[k].classList.toggle('on', k === i);
+    count.textContent = (i + 1) + ' / ' + slides.length;
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+    if (location.hash !== '#' + (i + 1)) history.replaceState(null, '', '#' + (i + 1));
+  }
+  document.getElementById('prev').addEventListener('click', function () { go(i - 1); });
+  document.getElementById('next').addEventListener('click', function () { go(i + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') go(i + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') go(i - 1);
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End') go(slides.length - 1);
+  });
+  var touchX = null;
+  document.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', function (e) {
+    if (touchX === null) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    if (dx < -40) go(i + 1); else if (dx > 40) go(i - 1);
+    touchX = null;
+  }, { passive: true });
+  var start = parseInt((location.hash || '').replace('#', ''), 10);
+  go(isNaN(start) ? 0 : start - 1);
+})();
+</script>
+</body>
+</html>
